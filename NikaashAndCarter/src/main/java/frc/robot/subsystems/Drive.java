@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 //import frc.robot.OI;
 import frc.robot.commands.DriveJoystick;
@@ -93,6 +94,7 @@ public class Drive extends Subsystem {
       setDrive(pVal*direction*speed, pVal*direction*speed);
     }
   }
+
   public void turnP(int direction, double speed, double distance, double maxError){
     double targetVal = distance*inchesConversion;
     double maxErrorVal = distance*inchesConversion;
@@ -101,6 +103,15 @@ public class Drive extends Subsystem {
     double pVal = error*kP;
     while ((Math.abs(getDriveL()) < targetVal - maxErrorVal) || (Math.abs(getDriveL()) < targetVal - maxErrorVal)){
       setDrive(pVal*direction*speed*-1, pVal*direction*speed);
+    }
+  }
+
+  public void alignP(){
+    double kP = 0.2;
+    while (Math.abs(Robot.limelight.getLimeX()) > 0){
+      double error = Robot.limelight.getLimeX();
+      double pVal = error*kP;
+      setDrive(pVal*-1, pVal);
     }
   }
 }

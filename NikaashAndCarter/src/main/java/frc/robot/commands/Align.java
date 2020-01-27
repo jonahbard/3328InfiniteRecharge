@@ -9,11 +9,11 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.OI;
 
-public class DriveJoystick extends Command {
-  public DriveJoystick() {
+public class Align extends Command {
+  public Align() {
     requires(Robot.drive);
+    requires(Robot.flywheel);
     requires(Robot.limelight);
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
@@ -22,22 +22,6 @@ public class DriveJoystick extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    if(Math.abs(Robot.oi.getJoystick(OI.LEFT_AXIS_Y)) > .15 || Math.abs(Robot.oi.getJoystick(OI.RIGHT_AXIS_Y)) > .15){
-      Robot.drive.setDriveL(Math.pow((Robot.oi.getJoystick(OI.LEFT_AXIS_Y)*-1), 3));
-      Robot.drive.setDriveR(Math.pow((Robot.oi.getJoystick(OI.RIGHT_AXIS_Y)*-1), 3));
-     }
-    else if(Robot.oi.getController(OI.BTNX)){
-      if (!(Robot.limelight.checkHorizon())){
-        Robot.drive.alignP();
-      }
-      else{
-        Robot.drive.setDrive(0, 0);
-      }
-    } 
-    else{
-      Robot.drive.setDriveL(0);
-      Robot.drive.setDriveR(0);
-    }
   }
 
   // Called repeatedly when this Command is scheduled to run

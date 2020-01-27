@@ -7,6 +7,7 @@ import frc.robot.OI;
 public class IndexerJoystick extends Command {
   public IndexerJoystick() {
     requires(Robot.indexer);
+    requires(Robot.intake);
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -16,9 +17,10 @@ public class IndexerJoystick extends Command {
   protected void initialize() {
     if(Math.abs(Robot.oi.getJoystick(OI.R2)) > .15){
       Robot.indexer.index(1);
+      Robot.intake.intake(1, 1);
     }
     else{
-      Robot.indexer.index(-0.1);
+      Robot.indexer.index(0);
     }
   }
 

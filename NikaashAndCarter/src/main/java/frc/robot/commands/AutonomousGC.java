@@ -16,7 +16,7 @@ public class AutonomousGC extends CommandGroup {
    */
   public AutonomousGC() {
     addParallel(new RunIntake());
-    addSequential(new DrivePID(1, 1, 100, 10));
+    addParallel(new DrivePID(1, 1, 100, 10));
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
