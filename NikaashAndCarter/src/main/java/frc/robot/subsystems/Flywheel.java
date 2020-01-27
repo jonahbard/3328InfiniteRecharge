@@ -19,12 +19,12 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.*;
 
 public class Flywheel extends Subsystem {
+  final double powerConversion = 1;
+
   CANSparkMax Fly1 = new CANSparkMax(RobotMap.Flywheel1, MotorType.kBrushless);
   CANSparkMax Fly2 = new CANSparkMax(RobotMap.Flywheel2, MotorType.kBrushless);
   CANEncoder Fly1Encoder = new CANEncoder(Fly1);
   CANEncoder Fly2Encoder = new CANEncoder(Fly2);
-
-  double powerConversion = 1;
 
   @Override
   public void initDefaultCommand() {

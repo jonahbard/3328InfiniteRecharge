@@ -11,10 +11,10 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.*;
 
 public class Drive extends Subsystem {
-
-  double inchesConversion = 34;
-  int RIGHT = 1;
-  int LEFT = -1;
+  //drive constants
+  final double inchesConversion = 34;
+  final int RIGHT = 1;
+  final int LEFT = -1;
 
   CANSparkMax FL = new CANSparkMax(RobotMap.FLWheel, MotorType.kBrushless);
   CANSparkMax ML = new CANSparkMax(RobotMap.MLWheel, MotorType.kBrushless);
@@ -107,7 +107,7 @@ public class Drive extends Subsystem {
   }
 
   public void swingP(){
-    
+
   }
 
   public void alignP(){
