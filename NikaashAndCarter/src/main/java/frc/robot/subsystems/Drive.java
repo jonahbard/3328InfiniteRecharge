@@ -1,10 +1,3 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018 FIRST. All Rights Reserved.                             */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -19,6 +12,8 @@ import com.revrobotics.CANSparkMaxLowLevel.*;
 public class Drive extends Subsystem {
 
   double inchesConversion = 34;
+  int RIGHT = 1;
+  int LEFT = -1;
 
   CANSparkMax FL = new CANSparkMax(RobotMap.FLWheel, MotorType.kBrushless);
   CANSparkMax ML = new CANSparkMax(RobotMap.MLWheel, MotorType.kBrushless);
@@ -103,7 +98,7 @@ public class Drive extends Subsystem {
   public void turnP(int direction, double speed, double distance, double maxError){
     double targetVal = distance*inchesConversion;
     double maxErrorVal = distance*inchesConversion;
-    double error = targetVal - (Math.abs(getDriveL()) +  Math.abs(getDriveL())/2);
+    double error = targetVal - ((Math.abs(getDriveL()) +  Math.abs(getDriveL()))/2);
     double kP = 0.2;
     double pVal = error*kP;
     while ((Math.abs(getDriveL()) < targetVal - maxErrorVal) || (Math.abs(getDriveL()) < targetVal - maxErrorVal)){
