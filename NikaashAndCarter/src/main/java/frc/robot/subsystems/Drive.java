@@ -106,6 +106,10 @@ public class Drive extends Subsystem {
     }
   }
 
+  public void swingP(){
+    
+  }
+
   public void alignP(){
     double kP = 0.2;
     while (Math.abs(Robot.limelight.getLimeX()) > 0){
