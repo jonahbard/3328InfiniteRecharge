@@ -83,7 +83,6 @@ public class Drive extends Subsystem {
     setDriveR(rightSpeed);
   }
 
-  //P loop for drive straight
   public void goP(int direction, double speed, double distance, double maxError){
     double targetVal = distance*inchesConversion;
     double maxErrorVal = distance*inchesConversion;
@@ -95,7 +94,6 @@ public class Drive extends Subsystem {
     }
   }
 
-  //P loop for drive turn
   public void turnP(int direction, double speed, double distance, double maxError){
     double targetVal = distance*inchesConversion;
     double maxErrorVal = distance*inchesConversion;
