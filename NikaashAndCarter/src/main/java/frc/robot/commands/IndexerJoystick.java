@@ -18,7 +18,7 @@ public class IndexerJoystick extends Command {
       Robot.indexer.index(1);
     }
     else{
-      Robot.indexer.index(1);
+      Robot.indexer.index(-0.1);
     }
   }
 

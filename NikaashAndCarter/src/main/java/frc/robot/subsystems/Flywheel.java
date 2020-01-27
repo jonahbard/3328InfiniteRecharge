@@ -18,19 +18,16 @@ import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.*;
 
-
-/**
- * Add your docs here.
- */
 public class Flywheel extends Subsystem {
   CANSparkMax Fly1 = new CANSparkMax(RobotMap.Flywheel1, MotorType.kBrushless);
   CANSparkMax Fly2 = new CANSparkMax(RobotMap.Flywheel2, MotorType.kBrushless);
   CANEncoder Fly1Encoder = new CANEncoder(Fly1);
   CANEncoder Fly2Encoder = new CANEncoder(Fly2);
 
+  double powerConversion = 1;
+
   @Override
   public void initDefaultCommand() {
-    // Set the default command for a subsystem here.
     setDefaultCommand(new FlywheelPID());
   }
 
@@ -38,10 +35,24 @@ public class Flywheel extends Subsystem {
     Fly1.set(speed);
     Fly2.set(speed);
   }
+  public double getFlyVelocity(){
+    double FlySpeed = (Fly1.get() + Fly2.get())/2;
+    return FlySpeed;
+  }
 
-  public void flywheelPID(double speed){
-    Fly1.set(speed);
-    Fly2.set(speed);
+  public double getFlyPower(){
+    double FlyPower = (Fly1.getBusVoltage() + Fly2.getBusVoltage())/2;
+    return FlyPower;
+  }
+
+  public void flywheelPID(double targetSpeed){
+    double kP = 1.2;
+    while(true){
+      double speedError = targetSpeed - getFlyVelocity();
+      double pVal = speedError*kP;
+      double finalPower = targetSpeed + pVal;
+      setFlywheel(finalPower);
+    }
   }
 
 }
