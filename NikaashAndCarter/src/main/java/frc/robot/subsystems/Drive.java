@@ -8,11 +8,13 @@ import frc.robot.commands.DriveJoystick;
 //import frc.robot.Robot;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.*;
 
 public class Drive extends Subsystem {
   //drive constants
-  final double inchesConversion = 34;
+  final double inchesConversion = 268.3;
+  final double degConversion = 2;
   final int RIGHT = 1;
   final int LEFT = -1;
 
@@ -84,30 +86,74 @@ public class Drive extends Subsystem {
     setDriveR(rightSpeed);
   }
 
+  public void driveBrake(){
+    FL.setIdleMode(IdleMode.kBrake);
+    ML.setIdleMode(IdleMode.kBrake);
+    BL.setIdleMode(IdleMode.kBrake);
+    FR.setIdleMode(IdleMode.kBrake);
+    MR.setIdleMode(IdleMode.kBrake);
+    BR.setIdleMode(IdleMode.kBrake);
+  }
+
+  public void driveCoast(){
+    FL.setIdleMode(IdleMode.kCoast);
+    ML.setIdleMode(IdleMode.kCoast);
+    BL.setIdleMode(IdleMode.kCoast);
+    FR.setIdleMode(IdleMode.kCoast);
+    MR.setIdleMode(IdleMode.kCoast);
+    BR.setIdleMode(IdleMode.kCoast);
+  }
+
+  public void driveStop(){
+    FL.stopMotor();
+    ML.stopMotor();
+    BL.stopMotor();
+    FR.stopMotor();
+    MR.stopMotor();
+    BR.stopMotor();
+  }
+
   public void goP(int direction, double speed, double distance, double maxError){
     double targetVal = distance*inchesConversion;
-    double maxErrorVal = distance*inchesConversion;
-    double error = targetVal - Math.abs(getDrive());
+    double maxErrorVal = maxError*inchesConversion;
     double kP = 0.2;
-    double pVal = error*kP;
     while (Math.abs(getDrive()) < targetVal - maxErrorVal){
+      double error = targetVal - Math.abs(getDrive());
+      double pVal = error*kP;
       setDrive(pVal*direction*speed, pVal*direction*speed);
     }
+    driveBrake();
+    driveStop();
   }
 
   public void turnP(int direction, double speed, double distance, double maxError){
-    double targetVal = distance*inchesConversion;
-    double maxErrorVal = distance*inchesConversion;
-    double error = targetVal - ((Math.abs(getDriveL()) +  Math.abs(getDriveL()))/2);
+    double targetVal = distance*degConversion;
+    double maxErrorVal = maxError*degConversion;
     double kP = 0.2;
-    double pVal = error*kP;
-    while ((Math.abs(getDriveL()) < targetVal - maxErrorVal) || (Math.abs(getDriveL()) < targetVal - maxErrorVal)){
+    while ((Math.abs(getDriveL()) < targetVal - maxErrorVal) || (Math.abs(getDriveR()) < targetVal - maxErrorVal)){
+      double error = targetVal - ((Math.abs(getDriveL()) +  Math.abs(getDriveR()))/2);
+      double pVal = error*kP;
       setDrive(pVal*direction*speed*-1, pVal*direction*speed);
     }
+    driveBrake();
+    driveStop();
   }
 
-  public void swingP(){
-
+  public void swingP(double speedL, double speedR, double distL, double distR, double maxErrorL, double maxErrorR){
+     double targetValL = distL*inchesConversion;
+     double targetValR = distR*inchesConversion;
+     double maxErrorValL = maxErrorL*inchesConversion;
+     double maxErrorValR = maxErrorR*inchesConversion;
+     double kP = 0.2;
+     while ((Math.abs(getDriveL()) < targetValL - maxErrorValL) || (Math.abs(getDriveR()) < targetValR - maxErrorValR)){
+      double errorL = targetValL - Math.abs(getDriveL());
+      double errorR = targetValR - Math.abs(getDriveR());
+      double pValL = errorL*kP;
+      double pValR = errorR*kP;
+      setDrive(pValL*speedL, pValR*speedR);
+     }
+     driveBrake();
+     driveStop();
   }
 
   public void alignP(){
@@ -117,5 +163,9 @@ public class Drive extends Subsystem {
       double pVal = error*kP;
       setDrive(pVal*-1, pVal);
     }
+  }
+
+  public void swingEncoder(double speedL, double speedR, double distL, double distR){
+    
   }
 }
