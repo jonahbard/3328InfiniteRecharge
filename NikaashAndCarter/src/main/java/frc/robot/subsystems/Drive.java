@@ -168,4 +168,13 @@ public class Drive extends Subsystem {
   public void swingEncoder(double speedL, double speedR, double distL, double distR){
     
   }
+
+  public void driveJam(){
+    FL.set(-0.1);
+    ML.set(0.1);
+    BL.set(-0.1);
+    FR.set(-0.1);
+    MR.set(0.1);
+    BR.set(-0.1);
+  }
 }

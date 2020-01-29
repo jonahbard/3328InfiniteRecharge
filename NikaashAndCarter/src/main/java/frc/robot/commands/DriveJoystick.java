@@ -22,6 +22,15 @@ public class DriveJoystick extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    int jamToggle = 0;
+    if (Robot.oi.getController(OI.BTNO)){
+      if (jamToggle == 0){
+        jamToggle = 1;
+      }
+      else if (jamToggle == 1){
+        jamToggle = 0;
+      }
+    }
     if(Math.abs(Robot.oi.getJoystick(OI.LEFT_AXIS_Y)) > .15 || Math.abs(Robot.oi.getJoystick(OI.RIGHT_AXIS_Y)) > .15){
       Robot.drive.setDriveL(Math.pow((Robot.oi.getJoystick(OI.LEFT_AXIS_Y)*-1), 3));
       Robot.drive.setDriveR(Math.pow((Robot.oi.getJoystick(OI.RIGHT_AXIS_Y)*-1), 3));
@@ -31,12 +40,23 @@ public class DriveJoystick extends Command {
         Robot.drive.alignP();
       }
       else{
-        Robot.drive.setDrive(0, 0);
+        if (jamToggle == 0){
+          Robot.drive.setDriveL(0);
+          Robot.drive.setDriveR(0);
+        }
+        else if (jamToggle == 1){
+          Robot.drive.driveJam();
+        }
       }
-    } 
+    }
     else{
-      Robot.drive.setDriveL(0);
-      Robot.drive.setDriveR(0);
+      if (jamToggle == 0){
+        Robot.drive.setDriveL(0);
+        Robot.drive.setDriveR(0);
+      }
+      else if (jamToggle == 1){
+        Robot.drive.driveJam();
+      }
     }
   }
 
