@@ -8,7 +8,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -17,6 +17,8 @@ import edu.wpi.first.networktables.NetworkTableInstance;
  * Add your docs here.
  */
 public class Limelight extends Subsystem {
+  final double mountingAngle = 30;
+  final double mountingHeight = 35;
   NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
   NetworkTableEntry tx = table.getEntry("tx");
   NetworkTableEntry ty = table.getEntry("ty");
@@ -38,6 +40,10 @@ public class Limelight extends Subsystem {
     else{
       return false;
     }
+  }
+  public double getTargetDistance(){
+    double limeDistance = (83.5 - mountingHeight)/(Math.tan(mountingAngle + getLimeY()));
+    return limeDistance;
   }
     // Put methods for controlling this subsystem
     // here. Call these from Commands.

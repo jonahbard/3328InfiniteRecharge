@@ -22,8 +22,12 @@ public class RobotMap {
   public static int FLWheel = 2;
   public static int MLWheel = 1;
   public static int BLWheel = 0;
+  //flywheel
   public static int Flywheel1 = 6;
   public static int Flywheel2 = 7;
+  public static int HoodAdjuster = 8;
+  public static int HoodEncoderA = 3;
+  public static int HoodEncoderB = 4; 
   //intake
   public static int Intake = 8;
   public static int IntakeEncoderA = 1;

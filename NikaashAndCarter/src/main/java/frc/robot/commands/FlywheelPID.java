@@ -21,6 +21,7 @@ public class FlywheelPID extends Command {
   @Override
   protected void initialize() {
     Robot.flywheel.flywheelPID(1);
+    Robot.flywheel.hoodP(5);
   }
 
   // Called repeatedly when this Command is scheduled to run
