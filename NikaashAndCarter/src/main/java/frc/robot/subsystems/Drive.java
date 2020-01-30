@@ -120,7 +120,7 @@ public class Drive extends Subsystem {
     while (Math.abs(getDrive()) < targetVal - maxErrorVal){
       double error = targetVal - Math.abs(getDrive());
       double pVal = error*kP;
-      setDrive(pVal*direction*speed, pVal*direction*speed);
+      setDrive(pVal*direction*speed, pVal*direction*speed); //overload this method
     }
     driveBrake();
     driveStop();
@@ -131,9 +131,9 @@ public class Drive extends Subsystem {
     double maxErrorVal = maxError*degConversion;
     double kP = 0.2;
     while ((Math.abs(getDriveL()) < targetVal - maxErrorVal) || (Math.abs(getDriveR()) < targetVal - maxErrorVal)){
-      double error = targetVal - ((Math.abs(getDriveL()) +  Math.abs(getDriveR()))/2);
+      double error = targetVal - ((Math.abs(getDriveL()) +  Math.abs(getDriveR()))/2); //take absolute of the whole thing, individual is not necessary
       double pVal = error*kP;
-      setDrive(pVal*direction*speed*-1, pVal*direction*speed);
+      setDrive(pVal*direction*speed*-1, pVal*direction*speed); //we could make separate turnR and turnL functions
     }
     driveBrake();
     driveStop();
@@ -158,14 +158,14 @@ public class Drive extends Subsystem {
 
   public void alignP(){
     double kP = 0.2;
-    while (Math.abs(Robot.limelight.getLimeX()) > 0){
-      double error = Robot.limelight.getLimeX();
+    while (Math.abs(Robot.limelight.getLimeX()) > 0){ //we can put maxError here, instead of 0. just a really easy way to do it
+      double error = Robot.limelight.getLimeX(); 
       double pVal = error*kP;
       setDrive(pVal*-1, pVal);
     }
   }
 
-  public void swingEncoder(double speedL, double speedR, double distL, double distR){
+  public void swingEncoder(double speedL, double speedR, double distL, double distR){ //what is this
     
   }
 
